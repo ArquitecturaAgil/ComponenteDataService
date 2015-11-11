@@ -1,0 +1,31 @@
+export ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/client
+export PATH=$PATH:$ORACLE_HOME/bin
+
+
+# Setup ORACLE variavles
+ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/client
+export ORACLE_HOME
+LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH
+ORACLE_SID=XE
+export ORACLE_SID
+export PATH=$PATH:$ORACLE_HOME/bin
+
+http://172.24.98.144:4848/common/index.jsf
+
+sqlplus sys/Estudiante1@172.24.98.143:1521/XE as sysdba
+
+asadmin set --user admin server.jms-service.jms-host.default_JMS_host.admin-password=	
+
+
+sysctl net.ipv4.ip_forward=1
+
+iptables -t nat -A PREROUTING -p tcp -d 157.253.236.91 --dport 4848 -j DNAT --to-destination 172.24.98.144:4848
+
+iptables -t nat -A PREROUTING -i eth0 -p tcp -d 157.253.236.91 --dport 4848 -j DNAT --to 172.24.98.144:4848
+
+iptables -A FORWARD -p tcp -i eth0 -d 157.253.236.91 --dport 4848 -j ACCEPT
+
+iptables -A INPUT  -p tcp --dport 4848 -j ACCEPT
+iptables-save > /etc/iptables.rules
+netstat -nap | grep  4848

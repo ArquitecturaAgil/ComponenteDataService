@@ -14,3 +14,5 @@ alter table historia add constraint pk_historia primary key (id);
 
 alter table historia add constraint fk_historia foreign key (documento) references paciente (documento);
 
+insert into paciente values ('1234','Juancho Perez');
+insert into historia values (1,'1234', sysdate);
